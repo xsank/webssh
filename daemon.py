@@ -1,8 +1,9 @@
 __author__ = 'mazheng'
 
 import paramiko
+from paramiko.ssh_exception import AuthenticationException,SSHException
 
-from data import ClientData,ServerData,InitData
+from data import ServerData
 
 
 class Bridge(object):
@@ -12,34 +13,40 @@ class Bridge(object):
         self.ssh=paramiko.SSHClient()
         self.shell=None
 
-    def open(self,data=""):
-        init_data=InitData(data)
-        self._ssh.set_missing_host_key_policy(
+    def open(self,data={}):
+        self.ssh.set_missing_host_key_policy(
             paramiko.AutoAddPolicy())
-        self.ssh.connect(
-            hostname=init_data.hostname,
-            port=init_data.port,
-            username=init_data.username,
-            password=init_data.password,
-            timeout=init_data.timeout
-        )
+        try:
+            self.ssh.connect(
+                hostname=data["hostname"],
+                port=data["port"],
+                username=data["username"],
+                password=data["password"],
+            )
+        except AuthenticationException:
+            raise Exception("auth failed user:%s ,passwd:%s" % (data["username"],data["password"]))
+        except SSHException:
+            raise Exception("could not connect to host:%s:%s" % (data["hostname"],data["port"]))
+
         self.establish()
 
     def establish(self,term="xterm"):
         self.shell=self.ssh.invoke_shell(term)
-        self.shell.setblocking(False)
-        self.shell.settimeout(0)
+        self.shell.settimeout(3)
 
     def trans_forward(self,data=""):
-        data=ClientData(data)
         self.shell.send(data)
 
     def trans_back(self):
         while True:
-            data=self.shell.recv(1024)
+            try:
+                data=self.shell.recv(1024)
+            except Exception:
+                self.destroy()
+                return
             if not data:
                 return
-            self.websocket.write_message(ServerData(data))
+            self.websocket.write_message(data)
 
     def trans_data(self,data=""):
         self.trans_forward(data)

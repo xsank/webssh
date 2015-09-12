@@ -4,6 +4,7 @@ import tornado.web
 import tornado.websocket
 
 from daemon import Bridge
+from data import ClientData
 
 
 class IndexHandler(tornado.web.RequestHandler):
@@ -29,8 +30,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         del self.clients[self._id()]
 
     @staticmethod
-    def _is_init_data(message):
-        return 'init' in message
+    def _is_init_data(data):
+        return data.get_type()=='init'
 
     def _id(self):
         return id(self)
@@ -40,10 +41,11 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def on_message(self, message):
         bridge=self.get_client()
-        if self._is_init_data():
-            bridge.open(message)
+        client_data=ClientData(message)
+        if self._is_init_data(client_data):
+            bridge.open(client_data.data)
         else:
-            bridge.trans_data(message)
+            bridge.trans_data(client_data.data)
 
     def on_close(self):
         self.remove_client()

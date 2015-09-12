@@ -1,22 +1,3 @@
-var client = new WSSHClient();
-
-client.connect({
-    onError: function(error) {
-        console.error(error);
-    },
-    onConnect: function() {
-        console.debug('Connected!');
-        client.sendInitData()
-    },
-    onClose: function() {
-        console.debug('Connection Reset By Peer');
-        client.sendCloseData('close')
-    },
-    onData: function(data) {
-        console.debug('Received: ' + data);
-    }
-});
-
 function WSSHClient() {
 };
 
@@ -71,7 +52,7 @@ WSSHClient.prototype.sendInitData=function(){
     var data= {
         hostname: 'localhost',
         port: 22,
-        username: 'root',
+        username: 'xsank',
         password: '123456'
     }
     this._connection.send(JSON.stringify({"tp":"init","data":data}))
@@ -81,6 +62,21 @@ WSSHClient.prototype.sendClientData=function(data){
     this._connection.send(JSON.stringify({"tp":"client","data":data}))
 }
 
-WSSHClient.prototype.sendCloseData=function(data){
-    this._connection.send(JSON.stringify({"tp":"close","data":data}))
-}
+var client = new WSSHClient();
+
+client.connect({
+    onError: function(error) {
+        console.error(error);
+    },
+    onConnect: function() {
+        console.debug('Connected!');
+        client.sendInitData()
+        client.sendClientData('ls\n')
+    },
+    onClose: function() {
+        console.debug('Connection Reset By Peer');
+    },
+    onData: function(data) {
+        console.debug('Received: ' + data);
+    }
+});
