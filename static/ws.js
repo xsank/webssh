@@ -30,14 +30,10 @@ WSSHClient.prototype.connect = function(options) {
     };
 
     this._connection.onmessage = function (evt) {
-        var data = JSON.parse(evt.data.toString());
-        if (data.error !== undefined) {
-            options.onError(data.error);
-        }
-        else {
-            options.onData(data.data);
-        }
+        var data=evt.data.toString()
+        options.onData(data);
     };
+
 
     this._connection.onclose = function(evt) {
         options.onClose();
