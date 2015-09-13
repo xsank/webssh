@@ -15,23 +15,23 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class WSHandler(tornado.websocket.WebSocketHandler):
 
-    clients=dict()
+    clients = dict()
 
     def get_client(self):
         return self.clients[self._id()]
 
     def put_client(self):
-        bridge=Bridge(self)
-        self.clients[self._id()]=bridge
+        bridge = Bridge(self)
+        self.clients[self._id()] = bridge
 
     def remove_client(self):
-        bridge=self.get_client()
+        bridge = self.get_client()
         bridge.destroy()
         del self.clients[self._id()]
 
     @staticmethod
     def _is_init_data(data):
-        return data.get_type()=='init'
+        return data.get_type() == 'init'
 
     def _id(self):
         return id(self)
@@ -40,8 +40,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         self.put_client()
 
     def on_message(self, message):
-        bridge=self.get_client()
-        client_data=ClientData(message)
+        bridge = self.get_client()
+        client_data = ClientData(message)
         if self._is_init_data(client_data):
             bridge.open(client_data.data)
         else:
