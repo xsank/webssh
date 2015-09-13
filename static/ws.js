@@ -1,7 +1,7 @@
 function WSSHClient() {
 };
 
-WSSHClient.prototype._generateEndpoint = function(options) {
+WSSHClient.prototype._generateEndpoint = function() {
     if (window.location.protocol == 'https:') {
         var protocol = 'wss://';
     } else {
@@ -12,7 +12,7 @@ WSSHClient.prototype._generateEndpoint = function(options) {
 };
 
 WSSHClient.prototype.connect = function(options) {
-    var endpoint = this._generateEndpoint(options);
+    var endpoint = this._generateEndpoint();
 
     if (window.WebSocket) {
         this._connection = new WebSocket(endpoint);
@@ -59,20 +59,3 @@ WSSHClient.prototype.sendClientData=function(data){
 }
 
 var client = new WSSHClient();
-
-client.connect({
-    onError: function(error) {
-        console.error(error);
-    },
-    onConnect: function() {
-        console.debug('Connected!');
-        client.sendInitData()
-        client.sendClientData('ls\n')
-    },
-    onClose: function() {
-        console.debug('Connection Reset By Peer');
-    },
-    onData: function(data) {
-        console.debug('Received: ' + data);
-    }
-});

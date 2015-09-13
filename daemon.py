@@ -32,7 +32,7 @@ class Bridge(object):
 
     def establish(self,term="xterm"):
         self.shell=self.ssh.invoke_shell(term)
-        self.shell.settimeout(3)
+        self.shell.setblocking(0)
 
     def trans_forward(self,data=""):
         self.shell.send(data)
@@ -42,7 +42,6 @@ class Bridge(object):
             try:
                 data=self.shell.recv(1024)
             except Exception:
-                self.destroy()
                 return
             if not data:
                 return

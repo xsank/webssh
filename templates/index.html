@@ -3,9 +3,60 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <style>
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .terminal {
+            border: #000 solid 5px;
+            font-family: "Monaco", "DejaVu Sans Mono", "Liberation Mono", monospace;
+            font-size: 11px;
+            color: #f0f0f0;
+            background: #000;
+            width: 600px;
+            box-shadow: rgba(0, 0, 0, 0.8) 2px 2px 20px;
+        }
+    </style>
 </head>
 <body>
-Hello webssh
+<div id="main">
+    <div id="term"></div>
+</div>
+<script src="static/jquery.min.js"></script>
+<script src="static/ws.js"></script>
+<script src="static/term.js"></script>
+<script type="application/javascript">
+    function openTerminal() {
+        var client = new WSSHClient();
+        var term = new Terminal(80, 24, function(key) {
+            client.sendClientData(key);
+        });
+        term.open();
+        $('.terminal').detach().appendTo('#term');
+        term.resize(80, 24);
+        term.write('Connecting...');
+        client.connect({
+            onError: function(error) {
+                term.write('Error: ' + error + '\r\n');
+                console.debug('error happened');
+            },
+            onConnect: function() {
+                console.debug('connection established');
+                client.sendInitData();
+                client.sendClientData('\r');
+            },
+            onClose: function() {
+                console.debug('connection reset by peer');
+            },
+            onData: function(data) {
+                console.debug('send data:'+data);
+                term.write(data);
+            }
+        })
+    }
+    openTerminal();
+</script>
 </body>
-<script src="/static/ws.js"></script>
 </html>
