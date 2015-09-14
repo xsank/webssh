@@ -4,6 +4,7 @@ import paramiko
 from paramiko.ssh_exception import AuthenticationException, SSHException
 
 from data import ServerData
+from ioloop import IOLoop
 
 
 class Bridge(object):
@@ -36,22 +37,16 @@ class Bridge(object):
         self.shell = self.ssh.invoke_shell(term)
         self.shell.setblocking(0)
 
+        fileno=self.shell.fileno()
+        connection=self.shell
+        websocket=self.websocket
+        IOLoop.instance().register(fileno,connection,websocket)
+
     def trans_forward(self, data=""):
         self.shell.send(data)
 
-    def trans_back(self):
-        while True:
-            try:
-                data = self.shell.recv(1024)
-            except Exception:
-                return
-            if not data:
-                return
-            self.websocket.write_message(data)
-
     def trans_data(self, data=""):
         self.trans_forward(data)
-        self.trans_back()
 
     def destroy(self):
         self.websocket.close()

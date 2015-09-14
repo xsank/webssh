@@ -43,16 +43,16 @@
                 console.debug('error happened');
             },
             onConnect: function() {
-                console.debug('connection established');
                 client.sendInitData();
                 client.sendClientData('\r');
+                console.debug('connection established');
             },
             onClose: function() {
                 console.debug('connection reset by peer');
             },
             onData: function(data) {
-                console.debug('send data:'+data);
                 term.write(data);
+                console.debug('get data:'+data);
             }
         })
     }

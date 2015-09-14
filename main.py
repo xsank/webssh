@@ -6,8 +6,8 @@ import tornado.ioloop
 import tornado.web
 import tornado.httpserver
 
-
 from urls import handlers
+from ioloop import IOLoop
 
 
 settings = dict(
@@ -26,6 +26,7 @@ class Application(tornado.web.Application):
 def main():
     http_server = tornado.httpserver.HTTPServer(Application())
     http_server.listen(settings['port'])
+    IOLoop.instance().start()
     tornado.ioloop.IOLoop.instance().start()
 
 
