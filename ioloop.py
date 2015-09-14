@@ -2,6 +2,7 @@ __author__ = 'mazheng'
 
 import select
 import socket
+import errno
 from threading import Thread
 
 
@@ -20,27 +21,28 @@ class IOLoop(Thread):
         return IOLoop._instance
 
     def register(self, fileno, connection, websocket):
-        self.select.register(fileno, select.EPOLLIN)
+        self.select.register(fileno, select.EPOLLIN | select.EPOLLET)
         self.connections[fileno] = connection
         self.websockets[fileno] = websocket
 
     def run(self):
         while True:
-            epoll_list = self.select.poll(1)
+            epoll_list = self.select.poll()
             for fd, events in epoll_list:
-                print fd, events
                 if select.EPOLLIN & events:
-                    error = False
                     while True:
                         try:
                             data = self.connections[fd].recv(1024)
-                        except socket.error:
-                            error = True
-                        if not data or error:
-                            break
+                        except socket.error, e:
+                            if e.errno == errno.EAGAIN:
+                                self.select.modify(fd, select.EPOLLET)
+                            elif isinstance(e, socket.timeout):
+                                break
+                            else:
+                                self.close(fd)
                         self.websockets[fd].write_message(data)
                 elif select.EPOLLHUP & events:
-                    self.close()
+                    self.close(fd)
                 else:
                     continue
 
