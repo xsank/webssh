@@ -37,10 +37,10 @@ class Bridge(object):
         self.shell = self.ssh.invoke_shell(term)
         self.shell.setblocking(0)
 
-        fileno=self.shell.fileno()
-        connection=self.shell
-        websocket=self.websocket
-        IOLoop.instance().register(fileno,connection,websocket)
+        fileno = self.shell.fileno()
+        connection = self.shell
+        websocket = self.websocket
+        IOLoop.instance().register(fileno, connection, websocket)
 
     def trans_forward(self, data=""):
         self.shell.send(data)

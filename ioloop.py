@@ -8,34 +8,34 @@ from threading import Thread
 class IOLoop(Thread):
 
     def __init__(self):
-        super(IOLoop,self).__init__()
-        self.select=select.epoll()
-        self.connections={}
-        self.websockets={}
+        super(IOLoop, self).__init__()
+        self.select = select.epoll()
+        self.connections = {}
+        self.websockets = {}
 
     @staticmethod
     def instance():
-        if not hasattr(IOLoop,"_instance"):
-            IOLoop._instance=IOLoop()
+        if not hasattr(IOLoop, "_instance"):
+            IOLoop._instance = IOLoop()
         return IOLoop._instance
 
-    def register(self,fileno,connection,websocket):
-        self.select.register(fileno,select.EPOLLIN)
-        self.connections[fileno]=connection
-        self.websockets[fileno]=websocket
+    def register(self, fileno, connection, websocket):
+        self.select.register(fileno, select.EPOLLIN)
+        self.connections[fileno] = connection
+        self.websockets[fileno] = websocket
 
     def run(self):
         while True:
-            epoll_list=self.select.poll(1)
-            for fd,events in epoll_list:
-                print fd,events
+            epoll_list = self.select.poll(1)
+            for fd, events in epoll_list:
+                print fd, events
                 if select.EPOLLIN & events:
-                    error=False
+                    error = False
                     while True:
                         try:
                             data = self.connections[fd].recv(1024)
                         except socket.error:
-                            error=True
+                            error = True
                         if not data or error:
                             break
                         self.websockets[fd].write_message(data)
@@ -44,7 +44,7 @@ class IOLoop(Thread):
                 else:
                     continue
 
-    def close(self,fd):
+    def close(self, fd):
         self.select.unregister(fd)
         self.connections[fd].close()
         self.websockets[fd].close()
