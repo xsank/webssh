@@ -13,9 +13,9 @@ Information
 
 2.pip install paramiko && pip install tornado
 
-3.alter the ws.js and replace the sendInitData settings with yours
+3.python main.py
 
-4.python main.py
+4.open your explorer and input your data then connect
 
 
 Preview
