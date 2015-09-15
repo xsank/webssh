@@ -20,7 +20,7 @@ class Bridge(object):
         try:
             self.ssh.connect(
                 hostname=data["hostname"],
-                port=data["port"],
+                port=int(data["port"]),
                 username=data["username"],
                 password=data["password"],
             )

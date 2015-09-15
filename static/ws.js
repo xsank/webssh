@@ -46,10 +46,10 @@ WSSHClient.prototype.send = function(data) {
 
 WSSHClient.prototype.sendInitData=function(){
     var data= {
-        hostname: 'localhost',
-        port: 22,
-        username: 'xsank',
-        password: '123456'
+        hostname: window.localStorage.host,
+        port: window.localStorage.port,
+        username: window.localStorage.username,
+        password: window.localStorage.password
     }
     this._connection.send(JSON.stringify({"tp":"init","data":data}))
 }

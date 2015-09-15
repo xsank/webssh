@@ -2,13 +2,15 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>webssh</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <style>
-        body {
-            padding-top: 60px;
-            padding-bottom: 40px;
-        }
-
+        .aside{text-align:center; background: #1f8dd6; height: 100px; color: #fff; vertical-align: middle;line-height:100px;font-size: 30px}
+        #main{margin-top: 20px;}
+        .pure-item{ margin: 0 auto 10px; width: 265px;}
+        .pure-item:after{ content: ""; display: table; clear: both;}
+        .pure-item label{ float: left; line-height: 34px;}
+        .pure-item input{ float: right;}
         .terminal {
             border: #000 solid 5px;
             font-family: "Monaco", "DejaVu Sans Mono", "Liberation Mono", monospace;
@@ -20,10 +22,35 @@
         }
     </style>
 </head>
+<header id="head" class="aside">Login SSH</header>
 <body>
-<div id="main">
-    <div id="term"></div>
-</div>
+    <div id="main" align="center">
+    <form class="pure-form pure-form-stacked">
+        <fieldset>
+            <div class="pure-item">
+                <label for="host">Host</label>
+                <input id="host" type="text" placeholder="Host">
+            </div>
+            <div class="pure-item">
+                <label for="port">Port</label>
+                <input id="port" type="text" placeholder="Port">
+            </div>
+            <div class="pure-item">
+                <label for="username">Username</label>
+                <input id="username" type="text" placeholder="Username">
+            </div>
+            <div class="pure-item">
+                <label for="password">Password</label>
+                <input id="password" type="text" placeholder="Password">
+            </div>
+            <label for="remember" class="pure-checkbox">
+                <input id="remember" type="checkbox"> Remember me
+            </label>
+            <button type="button" class="pure-button pure-button-primary" onclick="store()">Connect</button>
+        </fieldset>
+    </form>
+    </div>
+    <div id="term" align="center"></div>
 <script src="static/jquery.min.js"></script>
 <script src="static/ws.js"></script>
 <script src="static/term.js"></script>
@@ -56,7 +83,15 @@
             }
         })
     }
-    openTerminal();
+
+    function store(){
+        window.localStorage.host=$("#host").val()
+        window.localStorage.port=$("#port").val()
+        window.localStorage.username=$("#username").val()
+        window.localStorage.password=$("#password").val()
+
+        openTerminal()
+    }
 </script>
 </body>
 </html>

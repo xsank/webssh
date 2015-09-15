@@ -5,6 +5,8 @@ import socket
 import errno
 from threading import Thread
 
+from tornado.websocket import WebSocketClosedError
+
 
 class IOLoop(Thread):
 
@@ -40,7 +42,10 @@ class IOLoop(Thread):
                                 break
                             else:
                                 self.close(fd)
-                        self.websockets[fd].write_message(data)
+                        try:
+                            self.websockets[fd].write_message(data)
+                        except WebSocketClosedError:
+                            break
                 elif select.EPOLLHUP & events:
                     self.close(fd)
                 else:
