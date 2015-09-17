@@ -92,7 +92,7 @@
     }
 
     function connect(){
-        var remember=$("#remember").val()
+        var remember=$("#remember").is(":checked")
         var options={
             host:$("#host").val(),
             port:$("#port").val(),
