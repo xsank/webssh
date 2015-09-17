@@ -44,12 +44,12 @@ WSSHClient.prototype.send = function(data) {
     this._connection.send(JSON.stringify(data));
 };
 
-WSSHClient.prototype.sendInitData=function(){
+WSSHClient.prototype.sendInitData=function(options){
     var data= {
-        hostname: window.localStorage.host,
-        port: window.localStorage.port,
-        username: window.localStorage.username,
-        password: window.localStorage.password
+        hostname: options.host,
+        port: options.port,
+        username: options.username,
+        password: options.password
     }
     this._connection.send(JSON.stringify({"tp":"init","data":data}))
 }

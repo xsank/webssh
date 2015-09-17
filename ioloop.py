@@ -12,6 +12,7 @@ class IOLoop(Thread):
 
     def __init__(self):
         super(IOLoop, self).__init__()
+        self.daemon = True
         self.select = select.epoll()
         self.connections = {}
         self.websockets = {}

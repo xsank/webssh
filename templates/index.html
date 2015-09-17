@@ -41,12 +41,12 @@
             </div>
             <div class="pure-item">
                 <label for="password">Password</label>
-                <input id="password" type="text" placeholder="Password">
+                <input id="password" type="password" placeholder="Password">
             </div>
             <label for="remember" class="pure-checkbox">
                 <input id="remember" type="checkbox"> Remember me
             </label>
-            <button type="button" class="pure-button pure-button-primary" onclick="store()">Connect</button>
+            <button type="button" class="pure-button pure-button-primary" onclick="connect()">Connect</button>
         </fieldset>
     </form>
     </div>
@@ -55,7 +55,7 @@
 <script src="static/ws.js"></script>
 <script src="static/term.js"></script>
 <script type="application/javascript">
-    function openTerminal() {
+    function openTerminal(options) {
         var client = new WSSHClient();
         var term = new Terminal(80, 24, function(key) {
             client.sendClientData(key);
@@ -70,7 +70,7 @@
                 console.debug('error happened');
             },
             onConnect: function() {
-                client.sendInitData();
+                client.sendInitData(options);
                 client.sendClientData('\r');
                 console.debug('connection established');
             },
@@ -84,13 +84,25 @@
         })
     }
 
-    function store(){
-        window.localStorage.host=$("#host").val()
-        window.localStorage.port=$("#port").val()
-        window.localStorage.username=$("#username").val()
-        window.localStorage.password=$("#password").val()
+    function store(options){
+        window.localStorage.host=options.host
+        window.localStorage.port=options.port
+        window.localStorage.username=options.username
+        window.localStorage.password=options.password
+    }
 
-        openTerminal()
+    function connect(){
+        var remember=$("#remember").val()
+        var options={
+            host:$("#host").val(),
+            port:$("#port").val(),
+            username:$("#username").val(),
+            password:$("#password").val()
+        }
+        if (remember){
+            store(options)
+        }
+        openTerminal(options)
     }
 </script>
 </body>
