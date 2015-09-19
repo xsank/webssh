@@ -1,0 +1,26 @@
+.tooltip{
+    position: absolute;
+    max-width: 300px;
+    top: 3px;
+    left: 105%;
+    padding: 8px 10px;
+    border-radius: 5px;
+    color: #fff;
+    background: #000000;
+    box-shadow: 0 2px 2px 0 #7F7C7C;
+    white-space: nowrap;
+}
+.tooltip:after{
+    content: '';
+    position: absolute;
+    top: 35%;
+    right:100%;
+    margin-left: 10px;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-right: 7px solid #000;
+    border-bottom: 5px solid transparent;
+    border-left: 7px solid transparent;
+}
+

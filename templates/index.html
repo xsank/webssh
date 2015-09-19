@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>webssh</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link href="static/tooltip.css" rel="stylesheet" type="text/css"/>
     <style>
         .aside{text-align:center; background: #1f8dd6; height: 100px; color: #fff; vertical-align: middle;line-height:100px;font-size: 30px}
         #main{margin-top: 20px;}
-        .pure-item{ margin: 0 auto 10px; width: 265px;}
+        .pure-item{ margin: 0 auto 10px; width: 265px; position: relative;}
         .pure-item:after{ content: ""; display: table; clear: both;}
         .pure-item label{ float: left; line-height: 34px;}
         .pure-item input{ float: right;}
@@ -25,23 +26,23 @@
 <header id="head" class="aside">Login SSH</header>
 <body>
     <div id="main" align="center">
-    <form class="pure-form pure-form-stacked">
+    <form id="form" name="form" class="pure-form pure-form-stacked">
         <fieldset>
             <div class="pure-item">
                 <label for="host">Host</label>
-                <input id="host" type="text" placeholder="Host">
+                <input id="host" name="host" type="text" placeholder="Host">
             </div>
             <div class="pure-item">
                 <label for="port">Port</label>
-                <input id="port" type="text" placeholder="Port">
+                <input id="port" name="port" type="text" placeholder="Port">
             </div>
             <div class="pure-item">
                 <label for="username">Username</label>
-                <input id="username" type="text" placeholder="Username">
+                <input id="username" name="username" type="text" placeholder="Username">
             </div>
             <div class="pure-item">
                 <label for="password">Password</label>
-                <input id="password" type="password" placeholder="Password">
+                <input id="password" name="password" type="password" placeholder="Password">
             </div>
             <label for="remember" class="pure-checkbox">
                 <input id="remember" type="checkbox"> Remember me
@@ -54,6 +55,7 @@
 <script src="static/jquery.min.js"></script>
 <script src="static/ws.js"></script>
 <script src="static/term.js"></script>
+<script src="static/formvalid.js"></script>
 <script type="application/javascript">
     function openTerminal(options) {
         var client = new WSSHClient();
@@ -104,6 +106,15 @@
         }
         openTerminal(options)
     }
+
+    $(function(){
+        $("#form").valid([
+            { name:"host",type:"ip"},
+            { name:"port",type:"port"},
+            { name:"username",type:"username"},
+            { name:"password",type:"password"},
+        ]);
+    })
 </script>
 </body>
 </html>
