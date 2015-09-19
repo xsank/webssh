@@ -59,12 +59,12 @@
 <script type="application/javascript">
     function openTerminal(options) {
         var client = new WSSHClient();
-        var term = new Terminal(80, 24, function(key) {
-            client.sendClientData(key);
+        var term = new Terminal({cols:80, rows:24, screenKeys:true});
+        term.on('data',function(data){
+            client.sendClientData(data);
         });
         term.open();
         $('.terminal').detach().appendTo('#term');
-        term.resize(80, 24);
         term.write('Connecting...');
         client.connect({
             onError: function(error) {
