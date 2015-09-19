@@ -1,4 +1,4 @@
-__author__ = 'mazheng'
+__author__ = 'xsank'
 
 import paramiko
 from paramiko.ssh_exception import AuthenticationException, SSHException
@@ -43,7 +43,8 @@ class Bridge(object):
         IOLoop.instance().register(fileno, connection, websocket)
 
     def trans_forward(self, data=""):
-        self.shell.send(data)
+        if self.shell:
+            self.shell.send(data)
 
     def trans_data(self, data=""):
         self.trans_forward(data)

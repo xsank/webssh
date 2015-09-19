@@ -1,4 +1,4 @@
-__author__ = 'mazheng'
+__author__ = 'xsank'
 
 import select
 import socket
