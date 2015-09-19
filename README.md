@@ -24,4 +24,5 @@ Preview
 ![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/webssh.png "Preview image")
 ![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/cmd.png "Preview image")
 ![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/top.png "Preview image")
+![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/vi.png "Preview image")
 
