@@ -3,6 +3,7 @@ __author__ = 'xsank'
 import select
 import socket
 import errno
+import logging
 from threading import Thread
 
 from tornado.websocket import WebSocketClosedError

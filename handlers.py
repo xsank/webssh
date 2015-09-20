@@ -1,5 +1,7 @@
 __author__ = 'xsank'
 
+import logging
+
 import tornado.web
 import tornado.websocket
 
@@ -51,11 +53,14 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         if self._is_init_data(client_data):
             if self._check_init_param(client_data.data):
                 bridge.open(client_data.data)
+                logging.info('connection established from: %s' % self._id())
             else:
                 self.remove_client()
+                logging.warning('init param invalid: %s' % client_data.data)
         else:
             if bridge:
                 bridge.trans_data(client_data.data)
 
     def on_close(self):
         self.remove_client()
+        logging.info('client close the connection: %s' % self._id())
