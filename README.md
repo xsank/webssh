@@ -24,15 +24,12 @@ Preview
 <div align="center">
     <img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/webssh.png" width = "600" height = "377" alt="login" />
 </div>
-<br>
 <div align="center">
     <img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/cmd.png" width = "600" height = "295" alt="command" />
 </div>
-<br>
 <div align="center">
     <img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/top.png" width = "600" height = "297" alt="top" />
 </div>
-<br>
 <div align="center">
     <img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/vi.png" width = "600" height = "340" alt="vim" />
 </div>
