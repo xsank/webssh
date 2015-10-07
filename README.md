@@ -22,8 +22,8 @@ Information
 Preview
 -------
 
-![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/webssh.png "Preview image")
-![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/cmd.png "Preview image")
-![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/top.png "Preview image")
-![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/vi.png "Preview image")
+![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/webssh.png =600x377 "login")
+![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/cmd.png =600x295 "command")
+![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/top.png =600x297 "top")
+![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/vi.png =600x340 "vim")
 
