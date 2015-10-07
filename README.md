@@ -22,9 +22,12 @@ Information
 Preview
 -------
 
-<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/webssh.png" width = "600" height = "377" alt="login" align=center />
-<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/cmd.png" width = "600" height = "295" alt="command" align=center />
-<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/top.png" width = "600" height = "297" alt="top" align=center />
-<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/vi.png" width = "600" height = "340" alt="vim" align=center />
+<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/webssh.png" width = "600" height = "377" alt="login" align="center" />
+<br>
+<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/cmd.png" width = "600" height = "295" alt="command" align="center" />
+<br>
+<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/top.png" width = "600" height = "297" alt="top" align="center" />
+<br>
+<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/vi.png" width = "600" height = "340" alt="vim" align="center" />
 
 
