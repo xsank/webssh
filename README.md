@@ -22,14 +22,9 @@ Information
 Preview
 -------
 
-<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/webssh.png" width = "600" height = "377" alt="login" />
-<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/cmd.png" width = "600" height = "295" alt="command" />
-<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/top.png" width = "600" height = "297" alt="top" />
-<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/vi.png" width = "600" height = "340" alt="vim" />
+<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/webssh.png" width = "600" height = "377" alt="login" align=center />
+<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/cmd.png" width = "600" height = "295" alt="command" align=center />
+<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/top.png" width = "600" height = "297" alt="top" align=center />
+<img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/vi.png" width = "600" height = "340" alt="vim" align=center />
 
-
-![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/webssh.png =600x377 "login")
-![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/cmd.png =600x295 "command")
-![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/top.png =600x297 "top")
-![image](https://raw.githubusercontent.com/xsank/webssh/master/preview/vi.png =600x340 "vim")
 
