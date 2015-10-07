@@ -9,14 +9,14 @@ License: MIT (see LICENSE)
 Information
 -----------
 
-1.git clone https://github.com/xsank/webssh.git
+> 1.git clone https://github.com/xsank/webssh.git
 
-2.pip install paramiko && pip install tornado
+> 2.pip install paramiko && pip install tornado
 
-3.python main.py
+> 3.python main.py
 
-4.open your explorer and input your data then connect,the server init port is 9527
-you can modify it in webssh.conf file
+> 4.open your explorer and input your data then connect,the server init port is `9527`,
+> you can modify it in `webssh.conf` file
 
 
 Preview
