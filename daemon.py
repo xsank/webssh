@@ -61,16 +61,17 @@ class Bridge(object):
 
     def trans_back(self):
         yield self.id
-        while True:
+        connected = True
+        while connected:
             result = yield
             if self._websocket:
                 try:
                     self._websocket.write_message(result)
                 except WebSocketClosedError:
-                    self.destroy()
-                    break
+                    connected = False
                 if result.strip() == 'logout':
-                    self.destroy()
+                    connected = False
+        self.destroy()
 
     def destroy(self):
         self._websocket.close()
