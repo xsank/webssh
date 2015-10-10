@@ -35,3 +35,9 @@ Preview
 </div>
 
 
+Others
+------
+
+Please let me know if you meet any problems.
+
+email:xsank@foxmail.com
