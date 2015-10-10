@@ -2,17 +2,31 @@ __author__ = 'xsank'
 
 import paramiko
 from paramiko.ssh_exception import AuthenticationException, SSHException
+from tornado.websocket import WebSocketClosedError
 
-from data import ServerData
 from ioloop import IOLoop
+from utils import routine
 
 
 class Bridge(object):
 
     def __init__(self, websocket):
-        self.websocket = websocket
+        self._websocket = websocket
+        self._shell = None
+        self._id = 0
         self.ssh = paramiko.SSHClient()
-        self.shell = None
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def websocket(self):
+        return self._websocket
+
+    @property
+    def shell(self):
+        return self._shell
 
     def open(self, data={}):
         self.ssh.set_missing_host_key_policy(
@@ -34,21 +48,30 @@ class Bridge(object):
         self.establish()
 
     def establish(self, term="xterm"):
-        self.shell = self.ssh.invoke_shell(term)
-        self.shell.setblocking(0)
+        self._shell = self.ssh.invoke_shell(term)
+        self._shell.setblocking(0)
 
-        fileno = self.shell.fileno()
-        connection = self.shell
-        websocket = self.websocket
-        IOLoop.instance().register(fileno, connection, websocket)
+        self._id = self._shell.fileno()
+        IOLoop.instance().register(self)
+        IOLoop.instance().add_future(self.trans_back())
 
     def trans_forward(self, data=""):
-        if self.shell:
-            self.shell.send(data)
+        if self._shell:
+            self._shell.send(data)
 
-    def trans_data(self, data=""):
-        self.trans_forward(data)
+    def trans_back(self):
+        yield self.id
+        while True:
+            result = yield
+            if self._websocket:
+                try:
+                    self._websocket.write_message(result)
+                except WebSocketClosedError:
+                    self.destroy()
+                    break
+                if result.strip() == 'logout':
+                    self.destroy()
 
     def destroy(self):
-        self.websocket.close()
+        self._websocket.close()
         self.ssh.close()

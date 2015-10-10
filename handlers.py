@@ -59,7 +59,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 logging.warning('init param invalid: %s' % client_data.data)
         else:
             if bridge:
-                bridge.trans_data(client_data.data)
+                bridge.trans_forward(client_data.data)
 
     def on_close(self):
         self.remove_client()

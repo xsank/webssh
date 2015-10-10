@@ -6,8 +6,6 @@ import errno
 import logging
 from threading import Thread
 
-from tornado.websocket import WebSocketClosedError
-
 
 class IOLoop(Thread):
 
@@ -15,8 +13,8 @@ class IOLoop(Thread):
         super(IOLoop, self).__init__()
         self.daemon = True
         self.select = select.epoll()
-        self.connections = {}
-        self.websockets = {}
+        self.bridges = {}
+        self.futures = {}
 
     @staticmethod
     def instance():
@@ -24,10 +22,15 @@ class IOLoop(Thread):
             IOLoop._instance = IOLoop()
         return IOLoop._instance
 
-    def register(self, fileno, connection, websocket):
+    def register(self, bridge):
+        fileno = bridge.id
         self.select.register(fileno, select.EPOLLIN | select.EPOLLET)
-        self.connections[fileno] = connection
-        self.websockets[fileno] = websocket
+        self.bridges[fileno] = bridge
+
+    def add_future(self, future):
+        fileno = future.next()
+        self.futures[fileno] = future
+        future.next()
 
     def run(self):
         while True:
@@ -36,7 +39,7 @@ class IOLoop(Thread):
                 if select.EPOLLIN & events:
                     while True:
                         try:
-                            data = self.connections[fd].recv(1024)
+                            data = self.bridges[fd].shell.recv(1024)
                         except socket.error, e:
                             if e.errno == errno.EAGAIN:
                                 self.select.modify(fd, select.EPOLLET)
@@ -45,8 +48,8 @@ class IOLoop(Thread):
                             else:
                                 self.close(fd)
                         try:
-                            self.websockets[fd].write_message(data)
-                        except WebSocketClosedError:
+                            self.futures[fd].send(data)
+                        except StopIteration:
                             break
                 elif select.EPOLLHUP & events:
                     self.close(fd)
@@ -55,7 +58,5 @@ class IOLoop(Thread):
 
     def close(self, fd):
         self.select.unregister(fd)
-        self.connections[fd].close()
-        self.websockets[fd].close()
-        del self.connections[fd]
-        del self.websockets[fd]
+        self.bridges[fd].detroy()
+        del self.bridges[fd]
