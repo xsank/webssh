@@ -1,10 +1,10 @@
 __author__ = 'xsank'
 
 import re
-import functools
-from threading import Lock
+import sys
 
-from ioloop import IOLoop
+
+_PLATFORM = sys.platform
 
 
 def check_ip(ip):
@@ -16,13 +16,24 @@ def check_ip(ip):
 def check_port(port):
     if port and port.isdigit():
         iport = int(port)
-        return iport < 65536 and iport > 0
+        return 0 < iport < 65536
     return False
 
 
-def routine(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        future = func(*args, **kwargs)
-        IOLoop.instance().add_future(future)
-    return wrapper
+class Platform(object):
+
+    @staticmethod
+    def detail():
+        return _PLATFORM
+
+    @staticmethod
+    def is_win():
+        return _PLATFORM.startswith('win')
+
+    @staticmethod
+    def is_linux():
+        return _PLATFORM.startswith('linux')
+
+    @staticmethod
+    def is_mac():
+        return _PLATFORM.startswith('darwin')

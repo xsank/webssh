@@ -5,7 +5,6 @@ from paramiko.ssh_exception import AuthenticationException, SSHException
 from tornado.websocket import WebSocketClosedError
 
 from ioloop import IOLoop
-from utils import routine
 
 
 class Bridge(object):

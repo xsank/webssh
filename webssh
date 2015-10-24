@@ -1,0 +1,23 @@
+[I 151023 13:42:25 web:1908] 200 GET / (::1) 20.00ms
+[I 151023 13:42:25 web:1908] 200 GET /static/tooltip.css (::1) 337.00ms
+[I 151023 13:42:25 web:1908] 200 GET /static/ws.js (::1) 2.00ms
+[I 151023 13:42:25 web:1908] 200 GET /static/formvalid.js (::1) 13.00ms
+[I 151023 13:42:25 web:1908] 200 GET /static/jquery.min.js (::1) 19.00ms
+[I 151023 13:42:25 web:1908] 200 GET /static/term.js (::1) 89.00ms
+[I 151023 13:42:25 web:1908] 200 GET /favicon.ico (::1) 17.00ms
+[I 151023 13:42:57 transport:1440] Connected (version 2.0, client OpenSSH_5.3)
+[I 151023 13:42:58 transport:1440] Authentication (publickey) failed.
+[I 151023 13:42:58 transport:1440] Authentication (password) successful!
+[I 151023 13:42:58 handlers:56] connection established from: 65941912
+[I 151023 13:43:26 web:1908] 304 GET / (::1) 1.00ms
+[I 151023 13:43:27 handlers:66] client close the connection: 65941912
+[I 151023 13:43:27 web:1908] 304 GET /static/term.js (::1) 1.00ms
+[I 151023 13:43:27 web:1908] 304 GET /static/tooltip.css (::1) 1.00ms
+[I 151023 13:43:27 web:1908] 304 GET /static/formvalid.js (::1) 1.00ms
+[I 151023 13:43:27 web:1908] 304 GET /static/ws.js (::1) 2.00ms
+[I 151023 13:43:27 web:1908] 304 GET /static/jquery.min.js (::1) 1.00ms
+[I 151023 13:43:28 web:1908] 200 GET /favicon.ico (::1) 1.00ms
+[I 151023 13:44:00 transport:1440] Connected (version 2.0, client OpenSSH_5.3)
+[I 151023 13:44:01 transport:1440] Authentication (publickey) failed.
+[I 151023 13:44:01 transport:1440] Authentication (password) successful!
+[I 151023 13:44:01 handlers:56] connection established from: 66695408
