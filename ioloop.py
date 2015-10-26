@@ -36,9 +36,12 @@ class IOLoop(Thread):
     def register(self, bridge):
         raise NotImplemented("the register method should be implemented")
 
+    def _add_bridge(self, bridge):
+        self.bridges[bridge.id] = bridge
+
     def add_future(self, future):
-        fileno = future.next()
-        self.futures[fileno] = future
+        fd = future.next()
+        self.futures[fd] = future
         future.next()
 
     def close(self, fd):
@@ -53,9 +56,8 @@ class EPollIOLoop(IOLoop):
         super(EPollIOLoop, self).__init__(impl=select.epoll())
 
     def register(self, bridge):
-        fileno = bridge.id
-        self.impl.register(fileno, select.EPOLLIN | select.EPOLLET)
-        self.bridges[fileno] = bridge
+        self._add_bridge(bridge)
+        self.impl.register(bridge.id, select.EPOLLIN | select.EPOLLET)
 
     def run(self):
         while True:
@@ -85,13 +87,47 @@ class EPollIOLoop(IOLoop):
 class SelectIOLoop(IOLoop):
 
     def __init__(self):
-        super(SelectIOLoop, self).__init__(impl=select.select())
+        super(SelectIOLoop, self).__init__(impl=select.select)
+        self.read_fds = set()
+        self.write_fds = set()
+        self.error_fds = set()
+        self.fd_sets = (self.read_fds, self.write_fds, self.error_fds)
 
     def register(self, bridge):
-        pass
+        self._add_bridge(bridge)
+        self.read_fds.add(bridge.id)
 
     def run(self):
-        pass
+        import time
+        while True:
+            if self.read_fds:
+                readable, writeable, errors = self.impl(
+                    self.read_fds, self.write_fds, self.error_fds, 1)
+                events = {}
+                for fd in readable:
+                    events[fd] = events.get(fd, 0) | self.READ
+                for fd in errors:
+                    events[fd] = events.get(fd, 0) | self.ERROR
+                for fd, events in events.items():
+                    if self.READ & events:
+                        while True:
+                            try:
+                                data = self.bridges[fd].shell.recv(1024)
+                            except socket.error, e:
+                                if isinstance(e, socket.timeout):
+                                    break
+                                else:
+                                    self.close(fd)
+                            try:
+                                self.futures[fd].send(data)
+                            except StopIteration:
+                                break
+                    elif self.ERROR & events:
+                        self.close(fd)
+                    else:
+                        continue
+            else:
+                time.sleep(1)
 
 
 class KQueueIOLoop(IOLoop):
@@ -100,10 +136,9 @@ class KQueueIOLoop(IOLoop):
         super(KQueueIOLoop, self).__init__(impl=select.kqueue())
 
     def register(self, bridge):
-        fileno = bridge.id
-        self.bridges[fileno] = bridge
+        self._add_bridge(bridge)
         kevent = select.kevent(
-            fileno, filter=select.KQ_FILTER_READ, flags=select.KQ_EV_ADD)
+            bridge.id, filter=select.KQ_FILTER_READ, flags=select.KQ_EV_ADD)
         self.impl.control([kevent], 0)
 
     def run(self):
