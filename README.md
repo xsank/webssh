@@ -37,7 +37,7 @@ Preview
 
 Others
 ------
-Now the webssh support `linux` and `mac` OS, it is a little difficult to support `windows 10038` problem...
+Now the webssh support `linux` `mac` and `windows` OS.
 Please let me know if you meet any other problems.
 
-email:xsank@foxmail.com
+Email:xsank@foxmail.com
