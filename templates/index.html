@@ -94,6 +94,19 @@
         window.localStorage.password=options.password
     }
 
+    function check(){
+        var result=$("#host").val() && $("#port").val() && $("#username").val() && $("#password").val()
+        if (result){
+            var spans=$("fieldset").find("span")
+            for (var i=0;i<spans.length;i++){
+                if (spans[i].innerHTML.trim()!="correct"){
+                    return false
+                }
+            }
+        }
+        return result
+    }
+
     function connect(){
         var remember=$("#remember").is(":checked")
         var options={
@@ -105,7 +118,11 @@
         if (remember){
             store(options)
         }
-        openTerminal(options)
+        if (check()){
+            openTerminal(options)
+        }else{
+            alert("please check the form!")
+        }
     }
 
     $(function(){
