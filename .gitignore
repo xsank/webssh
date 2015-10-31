@@ -1,6 +1,8 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
+*.swp
 
 # C extensions
 *.so
@@ -58,3 +60,7 @@ target/
 
 # project
 .idea
+
+# other
+webssh
+
