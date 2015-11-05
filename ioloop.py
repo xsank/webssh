@@ -25,12 +25,12 @@ class IOLoop(Thread):
     @staticmethod
     def instance():
         if not hasattr(IOLoop, "_instance"):
-            if Platform.is_win():
-                IOLoop._instance = SelectIOLoop()
+            if Platform.is_linux():
+                IOLoop._instance = EPollIOLoop()
             elif Platform.is_mac():
                 IOLoop._instance = KQueueIOLoop()
             else:
-                IOLoop._instance = EPollIOLoop()
+                IOLoop._instance = SelectIOLoop()
         return IOLoop._instance
 
     def register(self, bridge):
