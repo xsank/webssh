@@ -40,9 +40,9 @@ class IOLoop(Thread):
         self.bridges[bridge.id] = bridge
 
     def add_future(self, future):
-        fd = future.next()
+        fd = next(future)
         self.futures[fd] = future
-        future.next()
+        next(future)
 
     def close(self, fd):
         self.impl.unregister(fd)
@@ -67,7 +67,7 @@ class EPollIOLoop(IOLoop):
                     while True:
                         try:
                             data = self.bridges[fd].shell.recv(1024)
-                        except socket.error, e:
+                        except socket.error as e:
                             if e.errno == errno.EAGAIN:
                                 self.impl.modify(fd, select.EPOLLET)
                             elif isinstance(e, socket.timeout):
@@ -113,7 +113,7 @@ class SelectIOLoop(IOLoop):
                         while True:
                             try:
                                 data = self.bridges[fd].shell.recv(1024)
-                            except socket.error, e:
+                            except socket.error as e:
                                 if isinstance(e, socket.timeout):
                                     break
                                 else:
@@ -156,7 +156,7 @@ class KQueueIOLoop(IOLoop):
                     while True:
                         try:
                             data = self.bridges[fd].shell.recv(1024)
-                        except socket.error, e:
+                        except socket.error as e:
                             if isinstance(e, socket.timeout):
                                 break
                             else:
