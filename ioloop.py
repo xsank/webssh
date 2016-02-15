@@ -9,6 +9,9 @@ from threading import Thread
 from utils import Platform
 
 
+MAX_DATA_BUFFER = 1024*1024
+
+
 class IOLoop(Thread):
 
     READ = 0x001
@@ -66,7 +69,7 @@ class EPollIOLoop(IOLoop):
                 if select.EPOLLIN & events:
                     while True:
                         try:
-                            data = self.bridges[fd].shell.recv(1024)
+                            data = self.bridges[fd].shell.recv(MAX_DATA_BUFFER)
                         except socket.error as e:
                             if e.errno == errno.EAGAIN:
                                 self.impl.modify(fd, select.EPOLLET)
@@ -112,7 +115,7 @@ class SelectIOLoop(IOLoop):
                     if self.READ & events:
                         while True:
                             try:
-                                data = self.bridges[fd].shell.recv(1024)
+                                data = self.bridges[fd].shell.recv(MAX_DATA_BUFFER)
                             except socket.error as e:
                                 if isinstance(e, socket.timeout):
                                     break
@@ -155,7 +158,7 @@ class KQueueIOLoop(IOLoop):
                 if select.KQ_FILTER_READ & events:
                     while True:
                         try:
-                            data = self.bridges[fd].shell.recv(1024)
+                            data = self.bridges[fd].shell.recv(MAX_DATA_BUFFER)
                         except socket.error as e:
                             if isinstance(e, socket.timeout):
                                 break
