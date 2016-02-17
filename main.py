@@ -31,9 +31,11 @@ def main():
 
     http_server = tornado.httpserver.HTTPServer(Application())
     http_server.listen(options.port)
+    print "Start Server Success. http://127.0.0.1:{}".format(options.port)
     IOLoop.instance().start()
     tornado.ioloop.IOLoop.instance().start()
 
 
 if __name__ == "__main__":
     main()
+
