@@ -3,29 +3,14 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>webssh</title>
+    <link rel='shortcut icon' type='image/x-icon' href='static/image/favicon.ico'/>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-    <link href="static/tooltip.css" rel="stylesheet" type="text/css"/>
-    <style>
-        .aside{text-align:center; background: #1f8dd6; height: 100px; color: #fff; vertical-align: middle;line-height:100px;font-size: 30px}
-        #main{margin-top: 20px;}
-        .pure-item{ margin: 0 auto 10px; width: 265px; position: relative;}
-        .pure-item:after{ content: ""; display: table; clear: both;}
-        .pure-item label{ float: left; line-height: 34px;}
-        .pure-item input{ float: right;}
-        .terminal {
-            border: #000 solid 5px;
-            font-family: "Monaco", "DejaVu Sans Mono", "Liberation Mono", monospace;
-            font-size: 11px;
-            color: #f0f0f0;
-            background: #000;
-            width: 600px;
-            box-shadow: rgba(0, 0, 0, 0.8) 2px 2px 20px;
-        }
-    </style>
+    <link href="static/css/tooltip.css" rel="stylesheet" type="text/css"/>
+    <link href="static/css/main.css" rel="stylesheet" type="text/css"/>
 </head>
 <header id="head" class="aside">Login SSH</header>
 <body>
-    <div id="main" align="center">
+<div id="main" align="center">
     <form id="form" name="form" class="pure-form pure-form-stacked">
         <fieldset>
             <div class="pure-item">
@@ -50,87 +35,20 @@
             <button type="button" class="pure-button pure-button-primary" onclick="connect()">Connect</button>
         </fieldset>
     </form>
-    </div>
-    <div id="term" align="center"></div>
-<script src="static/jquery.min.js"></script>
-<script src="static/ws.js"></script>
-<script src="static/term.js"></script>
-<script src="static/formvalid.js"></script>
+</div>
+<div id="term" align="center"></div>
+<script src="http://cdn.bootcss.com/jquery/2.1.2/jquery.min.js"></script>
+<script src="static/js/ws.js"></script>
+<script src="static/js/term.js"></script>
+<script src="static/js/formvalid.js"></script>
+<script src="static/js/main.js"></script>
 <script type="application/javascript">
-    function openTerminal(options) {
-        var client = new WSSHClient();
-        var term = new Terminal({cols:80, rows:24, screenKeys:true});
-        term.on('data',function(data){
-            client.sendClientData(data);
-        });
-        term.open();
-        $('.terminal').detach().appendTo('#term');
-        term.write('Connecting...');
-        client.connect({
-            onError: function(error) {
-                term.write('Error: ' + error + '\r\n');
-                console.debug('error happened');
-            },
-            onConnect: function() {
-                client.sendInitData(options);
-                client.sendClientData('\r');
-                console.debug('connection established');
-            },
-            onClose: function() {
-                term.write("\rconnection closed")
-                console.debug('connection reset by peer');
-            },
-            onData: function(data) {
-                term.write(data);
-                console.debug('get data:'+data);
-            }
-        })
-    }
-
-    function store(options){
-        window.localStorage.host=options.host
-        window.localStorage.port=options.port
-        window.localStorage.username=options.username
-        window.localStorage.password=options.password
-    }
-
-    function check(){
-        var result=$("#host").val() && $("#port").val() && $("#username").val() && $("#password").val()
-        if (result){
-            var spans=$("fieldset").find("span")
-            for (var i=0;i<spans.length;i++){
-                if (spans[i].innerHTML.trim()!="correct"){
-                    return false
-                }
-            }
-        }
-        return result
-    }
-
-    function connect(){
-        var remember=$("#remember").is(":checked")
-        var options={
-            host:$("#host").val(),
-            port:$("#port").val(),
-            username:$("#username").val(),
-            password:$("#password").val()
-        }
-        if (remember){
-            store(options)
-        }
-        if (check()){
-            openTerminal(options)
-        }else{
-            alert("please check the form!")
-        }
-    }
-
-    $(function(){
+    $(function () {
         $("#form").valid([
-            { name:"host",type:"ip"},
-            { name:"port",type:"port"},
-            { name:"username",type:"username"},
-            { name:"password",type:"password"},
+            {name: "host", type: "ip"},
+            {name: "port", type: "port"},
+            {name: "username", type: "username"},
+            {name: "password", type: "password"},
         ]);
     })
 </script>

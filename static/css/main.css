@@ -1,0 +1,44 @@
+.aside {
+    text-align: center;
+    background: #1f8dd6;
+    height: 100px;
+    color: #fff;
+    vertical-align: middle;
+    line-height: 100px;
+    font-size: 30px
+}
+
+#main {
+    margin-top: 20px;
+}
+
+.pure-item {
+    margin: 0 auto 10px;
+    width: 265px;
+    position: relative;
+}
+
+.pure-item:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.pure-item label {
+    float: left;
+    line-height: 34px;
+}
+
+.pure-item input {
+    float: right;
+}
+
+.terminal {
+    border: #000 solid 5px;
+    font-family: "Monaco", "DejaVu Sans Mono", "Liberation Mono", monospace;
+    font-size: 11px;
+    color: #f0f0f0;
+    background: #000;
+    width: 600px;
+    box-shadow: rgba(0, 0, 0, 0.8) 2px 2px 20px;
+}
