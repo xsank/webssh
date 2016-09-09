@@ -25,6 +25,20 @@ class Application(tornado.web.Application):
         tornado.web.Application.__init__(self, handlers, **settings)
 
 
+def welcome():
+    print '''
+Welcome to the webssh!
+                __              __
+ _      _____  / /_  __________/ /_
+| | /| / / _ \/ __ \/ ___/ ___/ __ \\
+| |/ |/ /  __/ /_/ (__  |__  ) / / /
+|__/|__/\___/_.___/____/____/_/ /_/
+
+Webssh now start~
+Please visit the localhost:9257 from the explorer~
+    '''
+
+
 def main():
     init_config()
     options.parse_config_file("webssh.conf")
@@ -32,6 +46,7 @@ def main():
     http_server = tornado.httpserver.HTTPServer(Application())
     http_server.listen(options.port)
     IOLoop.instance().start()
+    welcome()
     tornado.ioloop.IOLoop.instance().start()
 
 
