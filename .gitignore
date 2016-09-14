@@ -58,3 +58,6 @@ target/
 
 # project
 .idea
+
+# js
+term.js

@@ -37,7 +37,8 @@ Preview
 
 Others
 ------
-Now the webssh support `linux` `mac` and `windows` OS.
+To use CDN, the webssh use the version of term.js is `0.0.2`, you may update it with [new version](https://github.com/chjj/term.js).
+And now the webssh support `linux` `mac` and `windows` OS.  
 Please let me know if you meet any other problems.
 
-Email:xsank@foxmail.com
+Email:xsank#foxmail.com
