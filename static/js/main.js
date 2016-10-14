@@ -1,6 +1,6 @@
 function openTerminal(options) {
     var client = new WSSHClient();
-    var term = new Terminal({cols: 80, rows: 24, screenKeys: true, useStyle:true, screenKeys:true});
+    var term = new Terminal({cols: 80, rows: 24, screenKeys: true, useStyle:true});
     term.on('data', function (data) {
         client.sendClientData(data);
     });
