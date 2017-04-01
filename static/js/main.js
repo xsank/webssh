@@ -39,7 +39,8 @@ function check() {
     var result = $("#host").val() && $("#port").val() && $("#username").val() && $("#password").val()
     if (result) {
         var spans = $("fieldset").find("span")
-        for (var i = 0; i < spans.length; i++) {
+        // do not check the password
+        for (var i = 0; i < spans.length-1; i++) {
             if (spans[i].innerHTML.trim() != "correct") {
                 return false
             }

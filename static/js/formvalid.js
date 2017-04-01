@@ -62,7 +62,7 @@ $.fn.extend({
 			"int" : "only integer welcomed",
 			"double" : "only float welcomed",
 			"username" :"invalid username format,4-20 characters",
-			"password" : "invalid password format,6-20 characters",
+			"password" : "warning, you'd better use 6-20 characters",
 			"safe" : "forbidden special characters",
 			"dbc" : "forbidden full width characters",
 			"qq" : "invalid qq format",
@@ -103,8 +103,6 @@ $.fn.extend({
 
 		showError = function(fieldObj,filedName,warnInfo){
 			checkRet = false;
-			//fieldObj.css("borderColor","#FF0000");
-
 			var tipObj = $("#"+tipname(filedName));
 			if(tipObj.length>0) tipObj.remove();
 			var tipPosition = fieldObj.next().length>0 ? fieldObj.nextAll().eq(this.length-1):fieldObj.eq(this.length-1);
@@ -114,7 +112,6 @@ $.fn.extend({
 		},
 
 		showRight = function(fieldObj,filedName){
-			//fieldObj.css("borderColor","#00FF00");
 			var tipObj = $("#"+tipname(filedName));
 			if(tipObj.length>0) tipObj.remove();
 			var tipPosition = fieldObj.next().length>0 ? fieldObj.nextAll().eq(this.length-1):fieldObj.eq(this.length-1);
