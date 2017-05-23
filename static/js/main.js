@@ -1,6 +1,6 @@
-function openTerminal(options) {
-    var client = new WSSHClient();
-    var term = new Terminal({cols: 80, rows: 24, screenKeys: true, useStyle:true});
+function openTerminal(server, options) {
+    var client = new WSSHClient(server);
+    var term = new Terminal({termName:'screen',cols: 80, rows: 24, screenKeys: true, useStyle:true});
     term.on('data', function (data) {
         client.sendClientData(data);
     });
@@ -36,7 +36,7 @@ function store(options) {
 }
 
 function check() {
-    var result = $("#host").val() && $("#port").val() && $("#username").val() && $("#password").val()
+    var result = $("#host").val() && $("#port").val() && $("#username").val() && $("#password").val() && $("#server").val()
     if (result) {
         var spans = $("fieldset").find("span")
         // do not check the password
@@ -55,13 +55,15 @@ function connect() {
         host: $("#host").val(),
         port: $("#port").val(),
         username: $("#username").val(),
-        password: $("#password").val()
-    }
+        password: $("#password").val(),
+        server: $("#server").val()
+    };
     if (remember) {
         store(options)
     }
     if (check()) {
-        openTerminal(options)
+        alert($("#server").val());
+        openTerminal($("#server").val(), options)
     } else {
         alert("please check the form!")
     }

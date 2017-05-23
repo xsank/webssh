@@ -1,12 +1,10 @@
-__author__ = 'xsank'
-
 import select
 import socket
 import errno
-import logging
 from threading import Thread
-
 from utils import Platform
+
+__author__ = 'xsank'
 
 
 MAX_DATA_BUFFER = 1024*1024
@@ -39,6 +37,9 @@ class IOLoop(Thread):
     def register(self, bridge):
         raise NotImplemented("the register method should be implemented")
 
+    def unregister(self, fd):
+        pass
+
     def _add_bridge(self, bridge):
         self.bridges[bridge.id] = bridge
 
@@ -48,9 +49,15 @@ class IOLoop(Thread):
         next(future)
 
     def close(self, fd):
-        self.impl.unregister(fd)
-        self.bridges[fd].detroy()
-        del self.bridges[fd]
+        try:
+            self.impl.unregister(fd)
+        except AttributeError:
+            self.unregister(fd)
+        try:
+            self.bridges[fd].destroy()
+            del self.bridges[fd]
+        except KeyError:
+            pass
 
 
 class EPollIOLoop(IOLoop):
@@ -99,6 +106,9 @@ class SelectIOLoop(IOLoop):
     def register(self, bridge):
         self._add_bridge(bridge)
         self.read_fds.add(bridge.id)
+
+    def unregister(self, fd):
+        self.read_fds.discard(fd)
 
     def run(self):
         import time

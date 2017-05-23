@@ -1,4 +1,6 @@
-function WSSHClient() {
+function WSSHClient(server) {
+    this.server = server;
+    return this;
 };
 
 WSSHClient.prototype._generateEndpoint = function () {
@@ -7,7 +9,8 @@ WSSHClient.prototype._generateEndpoint = function () {
     } else {
         var protocol = 'ws://';
     }
-    var endpoint = protocol + window.location.host + '/ws';
+    var endpoint = protocol + window.location.host + '/ws?server='+this.server;
+	console.log(endpoint);
     return endpoint;
 };
 
@@ -58,4 +61,4 @@ WSSHClient.prototype.sendClientData = function (data) {
     this._connection.send(JSON.stringify({"tp": "client", "data": data}))
 }
 
-var client = new WSSHClient();
+// var client = new WSSHClient();
