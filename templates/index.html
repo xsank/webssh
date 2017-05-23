@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>webssh</title>
     <link rel='shortcut icon' type='image/x-icon' href='static/image/favicon.ico'/>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="static/css/pure-min.css">
     <link href="static/css/tooltip.css" rel="stylesheet" type="text/css"/>
     <link href="static/css/main.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -13,6 +13,13 @@
 <div id="main" align="center">
     <form id="form" name="form" class="pure-form pure-form-stacked">
         <fieldset>
+            <div class="pure-item">
+                <label for="server">Server protocol</label>
+                <select class="form-control" id="server">
+                  <option value="1">SSH</option>
+                  <option value="2">TELNET</option>
+                </select>
+            </div>
             <div class="pure-item">
                 <label for="host">Host</label>
                 <input id="host" name="host" type="text" placeholder="Host">
@@ -37,8 +44,8 @@
     </form>
 </div>
 <div id="term" align="center"></div>
-<script src="http://cdn.bootcss.com/jquery/2.1.2/jquery.min.js"></script>
-<script src="http://apps.bdimg.com/libs/term.js/0.0.2/term.js"></script>
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/term.js"></script>
 <script src="static/js/ws.js"></script>
 <script src="static/js/formvalid.js"></script>
 <script src="static/js/main.js"></script>
@@ -48,7 +55,7 @@
             {name: "host", type: "ip"},
             {name: "port", type: "port"},
             {name: "username", type: "username"},
-            {name: "password", type: "password"},
+            {name: "password", type: "password"}
         ]);
     })
 </script>

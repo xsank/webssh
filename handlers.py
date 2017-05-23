@@ -1,13 +1,16 @@
-__author__ = 'xsank'
-
+from ioloop import IOLoop
 import logging
-
 import tornado.web
 import tornado.websocket
-
-from daemon import Bridge
+from daemon import SSHBridge, TELNETBridge
 from data import ClientData
 from utils import check_ip, check_port
+
+__author__ = 'xsank'
+
+
+SSH_PROTOCOL = 1
+TELNET_PROTOCOL = 2
 
 
 class IndexHandler(tornado.web.RequestHandler):
@@ -17,19 +20,28 @@ class IndexHandler(tornado.web.RequestHandler):
 
 
 class WSHandler(tornado.websocket.WebSocketHandler):
-
     clients = dict()
+
+    def check_origin(self, origin):
+        return True
 
     def get_client(self):
         return self.clients.get(self._id(), None)
 
     def put_client(self):
-        bridge = Bridge(self)
+        server_protocol = int(self.get_query_argument('server', SSH_PROTOCOL))
+        if server_protocol == SSH_PROTOCOL:
+            bridge = SSHBridge(self)
+        elif server_protocol == TELNET_PROTOCOL:
+            bridge = TELNETBridge(self)
+        else:
+            bridge = SSHBridge(self)
         self.clients[self._id()] = bridge
 
     def remove_client(self):
         bridge = self.get_client()
         if bridge:
+            IOLoop.instance().close(bridge.id)
             bridge.destroy()
             del self.clients[self._id()]
 
