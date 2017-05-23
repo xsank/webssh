@@ -2,14 +2,14 @@ webssh
 ====================
 
 
-WebSSH is a simple web project which support login linux server with explorer.
+WebSSH is a simple web project which support login linux server(SSH) and windows server(Telnet) with explorer.
 
 License: `MIT` (see LICENSE)
 
 Information
 -----------
 
-> 1.git clone https://github.com/xsank/webssh.git
+> 1.git clone https://github.com/lyoniionly/webssh.git
 
 > 2.pip install paramiko && pip install tornado
 
@@ -22,23 +22,27 @@ Information
 Preview
 -------
 <div align="center">
-    <img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/webssh.png" width = "600" height = "377" alt="login" />
+    <img src="https://raw.githubusercontent.com/lyoniionly/webssh/master/preview/webssh.png" width = "656" height = "570" alt="login" />
 </div>
 <div align="center">
-    <img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/cmd.png" width = "600" height = "295" alt="command" />
+    <img src="https://raw.githubusercontent.com/lyoniionly/webssh/master/preview/webtelnet.png" width = "646" height = "565" alt="login" />
 </div>
 <div align="center">
-    <img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/top.png" width = "600" height = "297" alt="top" />
+    <img src="https://raw.githubusercontent.com/lyoniionly/webssh/master/preview/cmd.png" width = "600" height = "295" alt="command" />
 </div>
 <div align="center">
-    <img src="https://raw.githubusercontent.com/xsank/webssh/master/preview/vi.png" width = "600" height = "340" alt="vim" />
+    <img src="https://raw.githubusercontent.com/lyoniionly/webssh/master/preview/top.png" width = "600" height = "297" alt="top" />
 </div>
-
+<div align="center">
+    <img src="https://raw.githubusercontent.com/lyoniionly/webssh/master/preview/vi.png" width = "600" height = "340" alt="vim" />
+</div>
+<div align="center">
+    <img src="https://raw.githubusercontent.com/lyoniionly/webssh/master/preview/cmd_telnet.png" width = "610" height = "348" alt="command" />
+</div>
 
 Others
 ------
-To use CDN, the webssh use the version of term.js is `0.0.2`, you may update it with [new version](https://github.com/chjj/term.js).
-And now the webssh support `linux` `mac` and `windows` OS.  
+Now the webssh support `linux` `mac` and `windows` OS.
 Please let me know if you meet any other problems.
 
-Email:xsank#foxmail.com
+Email:lyoniionly#126.com
