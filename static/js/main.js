@@ -33,10 +33,11 @@ function store(options) {
     window.localStorage.port = options.port
     window.localStorage.username = options.username
     window.localStorage.password = options.password
+    window.localStorage.privatekey = options.privatekey
 }
 
 function check() {
-    var result = $("#host").val() && $("#port").val() && $("#username").val() && $("#password").val()
+    var result = $("#host").val() && $("#port").val() && $("#username").val() //&& $("#password").val()
     if (result) {
         var spans = $("fieldset").find("span")
         // do not check the password
@@ -55,7 +56,8 @@ function connect() {
         host: $("#host").val(),
         port: $("#port").val(),
         username: $("#username").val(),
-        password: $("#password").val()
+        password: $("#password").val(),
+        privatekey: $("#privatekey").val()
     }
     if (remember) {
         store(options)

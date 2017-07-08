@@ -27,7 +27,11 @@
             </div>
             <div class="pure-item">
                 <label for="password">Password</label>
-                <input id="password" name="password" type="password" placeholder="Password">
+                <input id="password" name="password" type="password" placeholder="Server Password or Private Key Password">
+            </div>
+            <div class="pure-item">
+                <label for="privatekey">Private Key</label>
+                <textarea rows="5" cols="20" id="privatekey" name="privatekey" placeholder="Private Key"></textarea>
             </div>
             <label for="remember" class="pure-checkbox">
                 <input id="remember" type="checkbox"> Remember me
@@ -48,7 +52,7 @@
             {name: "host", type: "ip"},
             {name: "port", type: "port"},
             {name: "username", type: "username"},
-            {name: "password", type: "password"},
+            //{name: "password", type: "password"},
         ]);
     })
 </script>
