@@ -1,11 +1,12 @@
 function openTerminal(options) {
     var client = new WSSHClient();
-    var term = new Terminal({cols: 80, rows: 24, screenKeys: true, useStyle:true});
+    var term = new Terminal({cols: 80, rows: 24, screenKeys: true, useStyle: true});
     term.on('data', function (data) {
         client.sendClientData(data);
     });
     term.open();
     $('.terminal').detach().appendTo('#term');
+    $("#term").show();
     term.write('Connecting...');
     client.connect({
         onError: function (error) {
@@ -20,6 +21,7 @@ function openTerminal(options) {
         onClose: function () {
             term.write("\rconnection closed")
             console.debug('connection reset by peer');
+            $('term').hide()
         },
         onData: function (data) {
             term.write(data);
@@ -28,26 +30,33 @@ function openTerminal(options) {
     })
 }
 
+var charWidth = 6.2;
+var charHeight = 15.2;
+
+/**
+ * for full screen
+ * @returns {{w: number, h: number}}
+ */
+function getTerminalSize() {
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    return {
+        w: Math.floor(width / charWidth),
+        h: Math.floor(height / charHeight)
+    };
+}
+
+
 function store(options) {
     window.localStorage.host = options.host
     window.localStorage.port = options.port
     window.localStorage.username = options.username
-    window.localStorage.password = options.password
-    window.localStorage.privatekey = options.privatekey
+    window.localStorage.ispwd = options.ispwd;
+    window.localStorage.secret = options.secret
 }
 
 function check() {
-    var result = $("#host").val() && $("#port").val() && $("#username").val() //&& $("#password").val()
-    if (result) {
-        var spans = $("fieldset").find("span")
-        // do not check the password
-        for (var i = 0; i < spans.length-1; i++) {
-            if (spans[i].innerHTML.trim() != "correct") {
-                return false
-            }
-        }
-    }
-    return result
+    return validResult["host"] && validResult["port"] && validResult["username"];
 }
 
 function connect() {
@@ -56,8 +65,8 @@ function connect() {
         host: $("#host").val(),
         port: $("#port").val(),
         username: $("#username").val(),
-        password: $("#password").val(),
-        privatekey: $("#privatekey").val()
+        ispwd: $("input[name=ispwd]:checked").val(),
+        secret: $("#secret").val(),
     }
     if (remember) {
         store(options)
@@ -65,6 +74,11 @@ function connect() {
     if (check()) {
         openTerminal(options)
     } else {
-        alert("please check the form!")
+        for (var key in validResult) {
+            if (!validResult[key]) {
+                alert(errorMsg[key]);
+                break;
+            }
+        }
     }
 }

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/2.8.0/xterm.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/2.8.0/addons/fullscreen/fullscreen.css">
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+    <link rel='shortcut icon' type='image/x-icon' href='static/image/favicon.ico'/>
+    <title>Webssh</title>
+</head>
+<body>
+<div id="login" class="container">
+    <div class="row main">
+        <div class="main-login main-center">
+            <h3>webssh</h3>
+            <form id="form" name="form" method="post" action="#">
+
+                <fieldset>
+                    <div class="form-group">
+                        <label for="host" class="cols-sm-2 control-label">Host</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-cloud fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" name="host" id="host"
+                                       placeholder="please input your server ip"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="port" class="cols-sm-2 control-label">Port</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-dot-circle-o fa"
+                                                               aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" name="port" id="port"
+                                       placeholder="Please input your server port"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username" class="cols-sm-2 control-label">Username</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" name="username" id="username"
+                                       placeholder="Please input your name"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Secret</label>
+                        <div class="cols-sm-10">
+                            <div id="tab" class="btn-group" data-toggle="buttons-radio">
+                                <a href="#pwd" class="btn" data-toggle="tab">Password</a>
+                                <a href="#pk" class="btn" data-toggle="tab">PrimaryKey</a>
+                            </div>
+                            <div class=tab-content">
+                                <div class="tab-pane active" id="pwd">
+                                    <div class="cols-sm-8">
+                                        <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa-lg"
+                                                                   aria-hidden="true"></i></span>
+                                            <input type="password" class="form-control" name="password"
+                                                   id="password" placeholder="Please input your password"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="pk">
+                                    <div class="cols-sm-8">
+                                        <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa-lg"
+                                                                   aria-hidden="true"></i></span>
+                                        <textarea class="form-control" name="primarykey" id="primarykey"
+                                                  placeholder="Please input your primary key"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <a type="button" id="button"
+                           onclick="connect()"
+                           class="btn btn-primary btn-lg btn-block login-button">Connect</a>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="term" align="center"></div>
+<script src="http://cdn.bootcss.com/jquery/2.1.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/2.8.0/addons/attach/attach.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/2.8.0/addons/fit/fit.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/2.8.0/addons/fullscreen/fullscreen.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js"></script>
+<script src="static/js/ws.js"></script>
+<script src="static/js/formvalid.js"></script>
+<script src="static/js/main.js"></script>
+<script type="application/javascript">
+    $(function () {
+        $("#form").valid([
+            {name: "host", type: "ip"},
+            {name: "port", type: "port"},
+            {name: "username", type: "username"},
+            //{name: "password", type: "password"},
+        ]);
+        $("term").hide();
+    })
+</script>
+</body>
+</html>

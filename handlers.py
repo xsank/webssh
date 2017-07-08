@@ -2,7 +2,6 @@ __author__ = 'xsank'
 
 import logging
 
-import tornado.web
 import tornado.websocket
 
 from daemon import Bridge
@@ -11,13 +10,11 @@ from utils import check_ip, check_port
 
 
 class IndexHandler(tornado.web.RequestHandler):
-
     def get(self):
         self.render("index.html")
 
 
 class WSHandler(tornado.websocket.WebSocketHandler):
-
     clients = dict()
 
     def get_client(self):
@@ -35,7 +32,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     @staticmethod
     def _check_init_param(data):
-        return check_ip(data["hostname"]) and check_port(data["port"])
+        return check_ip(data["host"]) and check_port(data["port"])
 
     @staticmethod
     def _is_init_data(data):

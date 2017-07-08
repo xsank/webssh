@@ -12,10 +12,18 @@
     margin-top: 20px;
 }
 
+#ratio-group {
+    float: right;
+}
+
 .pure-item {
     margin: 0 auto 10px;
-    width: 265px;
+    width: 300px;
     position: relative;
+}
+
+.pure-radio {
+    margin-left: 10px;
 }
 
 .pure-item:after {
@@ -39,7 +47,7 @@
     font-family: "Monaco", "DejaVu Sans Mono", "Liberation Mono", monospace;
     font-size: 11px;
     color: #f0f0f0;
-    background: #000;
     width: 600px;
+    background: #000;
     box-shadow: rgba(0, 0, 0, 0.8) 2px 2px 20px;
 }

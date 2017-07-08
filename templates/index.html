@@ -26,12 +26,23 @@
                 <input id="username" name="username" type="text" placeholder="Username">
             </div>
             <div class="pure-item">
-                <label for="password">Password</label>
-                <input id="password" name="password" type="password" placeholder="Server Password or Private Key Password">
+                <label>Type</label>
+                <div id="ratio-group">
+                    <label for="password" class="pure-radio">
+                        <input id="password" type="radio" name="ispwd" value="true" checked>
+                        Password
+                    </label>
+
+                    <label for="primerykey" class="pure-radio">
+                        <input id="primerykey" type="radio" name="ispwd" value="false">
+                        Primary Key
+                    </label>
+                </div>
             </div>
             <div class="pure-item">
-                <label for="privatekey">Private Key</label>
-                <textarea rows="5" cols="20" id="privatekey" name="privatekey" placeholder="Private Key"></textarea>
+                <label for="secret">Secret</label>
+                <input id="secret" name="secret" type="password"
+                       placeholder="Password or Private Key">
             </div>
             <label for="remember" class="pure-checkbox">
                 <input id="remember" type="checkbox"> Remember me
@@ -42,7 +53,7 @@
 </div>
 <div id="term" align="center"></div>
 <script src="http://cdn.bootcss.com/jquery/2.1.2/jquery.min.js"></script>
-<script src="http://apps.bdimg.com/libs/term.js/0.0.2/term.js"></script>
+<script src="https://rawgit.com/chjj/term.js/master/src/term.js"></script>
 <script src="static/js/ws.js"></script>
 <script src="static/js/formvalid.js"></script>
 <script src="static/js/main.js"></script>

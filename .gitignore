@@ -61,3 +61,6 @@ target/
 
 # js
 term.js
+
+# not finished files
+_*.*
