@@ -4,6 +4,8 @@ webssh
 
 WebSSH is a simple web project which support login linux server with explorer.
 
+**⚠ This project is no longer maintained and thank you for your support. ⚠
+
 License: `MIT` (see LICENSE)
 
 Information
