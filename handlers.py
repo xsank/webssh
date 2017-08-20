@@ -61,3 +61,4 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     def on_close(self):
         self.remove_client()
         logging.info('client close the connection: %s' % self._id())
+
