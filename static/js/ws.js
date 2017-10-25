@@ -2,12 +2,9 @@ function WSSHClient() {
 };
 
 WSSHClient.prototype._generateEndpoint = function () {
-    if (window.location.protocol == 'https:') {
-        var protocol = 'wss://';
-    } else {
-        var protocol = 'ws://';
-    }
-    var endpoint = protocol + window.location.host + '/ws';
+    var img = new Image();
+    img.src = "ws";
+    var endpoint = img.src.replace('https://', 'wss://').replace('http://', 'ws://')
     return endpoint;
 };
 
