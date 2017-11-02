@@ -39,7 +39,7 @@ class Bridge(object):
         return pkey
 
     def isPassword(self, data):
-        return data.get("ispwd", True)
+        return data.get("ispwd", 'true') == 'true'
 
     def open(self, data={}):
         self.ssh.set_missing_host_key_policy(
